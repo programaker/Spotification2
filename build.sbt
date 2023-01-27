@@ -15,7 +15,7 @@ lazy val root = project
   .in(file("."))
   .settings(
     organization := "com.github.programaker",
-    name := "Spotification2",
+    name := "spotification2",
     version := Spotification2,
 
     scalaVersion := Scala,
@@ -37,11 +37,13 @@ lazy val root = project
       Wart.Serializable,
       Wart.Product
     ),
+    
     // disable Wartremover in console. Not only it's unnecessary but also cause error in Scala 2.13.2+
     Compile / console / scalacOptions := (console / scalacOptions).value.filterNot(_.contains("wartremover")),
+    // Compile / mainClass := Some("<TODO>"),
 
     dockerBaseImage := DockerImage,
-    // Compile / mainClass := Some("<TODO>"),
+    dockerExposedPorts += 8080,
 
     scalacOptions ++= Seq(
       "-encoding", "utf8",

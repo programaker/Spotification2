@@ -13,10 +13,10 @@ object Dependencies {
     "dev.zio" %% "zio-http" % Versions.ZioHttp,
     
     "dev.zio" %% "zio-json" % Versions.ZioJson,
-    "dev.zio" % "zio-json-interop-refined" % Versions.ZioJson,
+    // "dev.zio" % "zio-json-interop-refined" % Versions.ZioJson,
     
     "dev.zio" %% "zio-config" % Versions.ZioConfig,
-    "dev.zio" %% "zio-config-refined" % Versions.ZioConfig,
+    // "dev.zio" %% "zio-config-refined" % Versions.ZioConfig,
   )
 
   private object Versions {
@@ -26,6 +26,6 @@ object Dependencies {
     def ZioJson = "0.4.2"
     def ZioLogging = "2.1.8"
     def ZioHttp = "0.0.4"
-    def ZioConfig = "3.0.7"
+    def ZioConfig = "3.0.6"
   }
 }

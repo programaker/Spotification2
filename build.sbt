@@ -35,7 +35,8 @@ lazy val root = project
       Wart.Overloading,
       Wart.JavaSerializable,
       Wart.Serializable,
-      Wart.Product
+      Wart.Product,
+      Wart.Equals
     ),
     
     // disable Wartremover in console. Not only it's unnecessary but also cause error in Scala 2.13.2+
@@ -48,7 +49,6 @@ lazy val root = project
     scalacOptions ++= Seq(
       "-encoding", "utf8",
       "-deprecation",
-      "-language:strictEquality",
       "-Ykind-projector:underscores"
     )
   )

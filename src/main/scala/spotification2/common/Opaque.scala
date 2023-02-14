@@ -2,6 +2,9 @@ package spotification2.common
 
 import cats.Show
 import eu.timepit.refined.api.Refined
+import io.circe.Decoder
+import io.circe.Encoder
+import pureconfig.ConfigReader
 
 /** Generates an `opaque type` with `apply` and `value` to wrap/unwrap a value in it, in addition to some basic given
   * instances.
@@ -24,3 +27,6 @@ transparent trait Opaque[T]:
 
   given (using CanEqual[T, T]): CanEqual[OpaqueType, OpaqueType] = summon
   given (using Show[T]): Show[OpaqueType] = summon
+  given (using Encoder[T]): Encoder[OpaqueType] = summon
+  given (using Decoder[T]): Decoder[OpaqueType] = summon
+  given (using ConfigReader[T]): ConfigReader[OpaqueType] = summon

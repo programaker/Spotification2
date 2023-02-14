@@ -41,7 +41,7 @@ lazy val root = project
     
     // disable Wartremover in console. Not only it's unnecessary but also cause error in Scala 2.13.2+
     Compile / console / scalacOptions := (console / scalacOptions).value.filterNot(_.contains("wartremover")),
-    // Compile / mainClass := Some("<TODO>"),
+    Compile / mainClass := Some("spotification2.app.Spotification2HttpApp"),
 
     dockerBaseImage := DockerImage,
     dockerExposedPorts += 8080,
@@ -49,7 +49,8 @@ lazy val root = project
     scalacOptions ++= Seq(
       "-encoding", "utf8",
       "-deprecation",
-      "-Ykind-projector:underscores"
+      "-Ykind-projector:underscores",
+      "-language:strictEquality",
     )
   )
   .enablePlugins(

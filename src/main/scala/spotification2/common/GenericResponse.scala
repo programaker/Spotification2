@@ -1,7 +1,8 @@
 package spotification2.common
 
 import cats.Show
+import io.circe.Codec
 
-enum GenericResponse:
-  case Success[S: Show](success: S)
-  case Error[E: Show](error: E)
+enum GenericResponse derives Codec.AsObject:
+  case Success(success: String)
+  case Error(error: String)

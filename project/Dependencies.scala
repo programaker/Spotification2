@@ -1,5 +1,4 @@
 import sbt._
-import coursierapi.Versions
 
 object Dependencies {
   val libraries = Seq(

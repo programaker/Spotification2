@@ -2,14 +2,14 @@
 // | | |_ bugfixes, small improvements
 // | |___ non-api changes
 // | ____ api changes
-def Spotification2 = "0.1.0"
+val Spotification2 = "0.1.0"
 
-def Scala = "3.2.1"
+val Scala = "3.2.2"
 
 // TODO
 // Update this to Java 19 
 // Try Alpaquita: https://bell-sw.com/blog/bellsoft-introduces-alpaquita-linux/
-def DockerImage = "bellsoft/liberica-openjre-alpine:17.0.1"
+val DockerImage = "eclipse-temurin:19.0.1_10-jre-focal"
 
 lazy val root = project
   .in(file("."))
@@ -55,6 +55,5 @@ lazy val root = project
   )
   .enablePlugins(
     JavaAppPackaging,
-    DockerPlugin,
-    AshScriptPlugin
+    DockerPlugin
   )

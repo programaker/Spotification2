@@ -1,10 +1,8 @@
 package spotification2.common
 
 import eu.timepit.refined.api.Refined
-import eu.timepit.refined.api.Validate
 import eu.timepit.refined.boolean.And
 import eu.timepit.refined.boolean.Not
-import eu.timepit.refined.cats.refTypeShow
 import eu.timepit.refined.collection.MaxSize
 import eu.timepit.refined.collection.MinSize
 import eu.timepit.refined.numeric.NonNegative

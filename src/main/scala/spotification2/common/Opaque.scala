@@ -2,7 +2,6 @@ package spotification2.common
 
 import cats.Show
 import cats.kernel.Eq
-import eu.timepit.refined.api.Refined
 import io.circe.Decoder
 import io.circe.Encoder
 import pureconfig.ConfigReader

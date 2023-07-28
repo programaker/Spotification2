@@ -12,6 +12,7 @@ object Dependencies {
     "org.typelevel" %% "mouse" % Versions.Mouse,
 
     "com.softwaremill.sttp.tapir" %% "tapir-core" % Versions.TapirCore,
+    "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % Versions.TapirCore,
 
     "io.circe" %% "circe-core" % Versions.CirceCore,

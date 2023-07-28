@@ -4,6 +4,7 @@ object Dependencies {
   val libraries = Seq(
     "eu.timepit" %% "refined" % Versions.Refined,
     "eu.timepit" %% "refined-cats" % Versions.Refined,
+    "eu.timepit" %% "refined-pureconfig" % Versions.Refined,
     "eu.timepit" %% "refined-scalacheck" % Versions.Refined % Test,
 
     "org.typelevel" %% "cats-core" % Versions.CatsCore,

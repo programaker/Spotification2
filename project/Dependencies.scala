@@ -1,5 +1,4 @@
 import sbt._
-import coursierapi.Versions
 
 object Dependencies {
   val libraries = Seq(
@@ -39,7 +38,7 @@ object Dependencies {
     val CirceCore = "0.14.5"
     val OdinCore = "0.13.0"
     val PureConfigCore = "0.17.4"
-    val Logback = "1.4.4"
+    val Logback = "1.4.8"
     val Mouse = "1.2.1"
     val TapirCore = "1.6.3"
     val Weaver = "0.8.3"

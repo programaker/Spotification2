@@ -1,6 +1,7 @@
 package spotification2.common
 
 import cats.Show
+import cats.kernel.Eq
 import eu.timepit.refined.api.Refined
 import io.circe.Decoder
 import io.circe.Encoder
@@ -26,6 +27,7 @@ transparent trait Opaque[T]:
   extension [F[_]](ot: F[OpaqueType]) inline def unwrap: F[T] = ot
 
   given (using CanEqual[T, T]): CanEqual[OpaqueType, OpaqueType] = summon
+  given (using Eq[T]): Eq[OpaqueType] = summon
   given (using Show[T]): Show[OpaqueType] = summon
   given (using Encoder[T]): Encoder[OpaqueType] = summon
   given (using Decoder[T]): Decoder[OpaqueType] = summon

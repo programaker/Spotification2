@@ -2,7 +2,7 @@
 // | | |_ bugfixes, small improvements
 // | |___ non-api changes
 // | ____ api changes
-def Spotification2 = "0.1.0"
+val Spotification2 = "0.1.0"
 
 def Scala = "3.3.0"
 
@@ -35,6 +35,5 @@ lazy val root = project
   )
   .enablePlugins(
     JavaAppPackaging,
-    DockerPlugin,
-    AshScriptPlugin
+    DockerPlugin
   )

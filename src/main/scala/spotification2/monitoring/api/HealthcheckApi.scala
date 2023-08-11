@@ -14,5 +14,5 @@ object HealthCheckApi:
       .in("health")
       .out(jsonBody[GenericResponse].description("Just a text message"))
 
-  def healthServer: ServerEndpoint[Any, IO] =
+  def healthServerEndpoint: ServerEndpoint[Any, IO] =
     healthEndpoint.serverLogicSuccess(_ => IO.pure(GenericResponse.success("I'm doing well, thanks for asking ^_^")))

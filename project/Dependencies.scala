@@ -15,6 +15,9 @@ object Dependencies {
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-http4s-server" % Versions.TapirCore,
 
+    "org.http4s" %% "http4s-blaze-server" % Versions.Http4s,
+    "org.http4s" %% "http4s-circe" % Versions.Http4s,
+
     "io.circe" %% "circe-core" % Versions.CirceCore,
     "io.circe" %% "circe-generic" % Versions.CirceCore,
     "io.circe" %% "circe-parser" % Versions.CirceCore,
@@ -43,6 +46,7 @@ object Dependencies {
     val Logback = "1.4.8"
     val Mouse = "1.2.1"
     val TapirCore = "1.6.3"
+    val Http4s = "0.23.15"
     val Weaver = "0.8.3"
   }
 }

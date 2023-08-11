@@ -5,6 +5,7 @@ import cats.kernel.Eq
 import io.circe.Decoder
 import io.circe.Encoder
 import pureconfig.ConfigReader
+import sttp.tapir.Schema
 
 /** Generates an `opaque type` with `apply` and `value` to wrap/unwrap a value in it, in addition to some basic given
   * instances.
@@ -31,3 +32,4 @@ transparent trait Opaque[T]:
   given (using Encoder[T]): Encoder[OpaqueType] = summon
   given (using Decoder[T]): Decoder[OpaqueType] = summon
   given (using ConfigReader[T]): ConfigReader[OpaqueType] = summon
+  given (using Schema[T]): Schema[OpaqueType] = summon

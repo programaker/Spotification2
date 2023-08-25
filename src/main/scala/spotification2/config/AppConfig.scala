@@ -1,5 +1,8 @@
 package spotification2.config
 
+import eu.timepit.refined.pureconfig.*
+import pureconfig.ConfigReader
+import pureconfig.generic.derivation.default.*
 import spotification2.album.AlbumApiUri
 import spotification2.artist.ArtistApiUri
 import spotification2.auth.ApiTokenUri
@@ -27,7 +30,7 @@ final case class AppConfig(
   user: UserConfig,
   server: ServerConfig,
   client: ClientConfig
-)
+) derives ConfigReader
 
 final case class AuthorizationConfig(
   clientId: ClientId,
@@ -36,45 +39,45 @@ final case class AuthorizationConfig(
   authorizeUri: AuthorizeUri,
   apiTokenUri: ApiTokenUri,
   scopes: Option[List[Scope]]
-)
+) derives ConfigReader
 
 final case class PlaylistConfig(
   playlistApiUri: PlaylistApiUri,
   getPlaylistItemsLimit: PositiveInt,
   mergePlaylistsRetry: RetryConfig
-)
+) derives ConfigReader
 
 final case class ArtistConfig(
   artistApiUri: ArtistApiUri
-)
+) derives ConfigReader
 
 final case class AlbumConfig(
   albumApiUri: AlbumApiUri
-)
+) derives ConfigReader
 
 final case class TrackConfig(
   trackApiUri: TrackApiUri
-)
+) derives ConfigReader
 
 final case class MeConfig(
   meApiUri: MeApiUri
-)
+) derives ConfigReader
 
 final case class UserConfig(
   userApiUri: UserApiUri
-)
+) derives ConfigReader
 
 final case class ServerConfig(
   host: Host,
   port: PositiveInt
-)
+) derives ConfigReader
 
 final case class ClientConfig(
   logHeaders: Boolean,
   logBody: Boolean
-)
+) derives ConfigReader
 
 final case class RetryConfig(
   retryAfter: FiniteDuration,
   attempts: PositiveInt
-)
+) derives ConfigReader

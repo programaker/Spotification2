@@ -1,17 +1,9 @@
 package spotification2.log
 
+import org.typelevel.log4cats.Logger
 import cats.effect.IO
-import cats.effect.kernel.Resource
-import io.odin.Level
-import io.odin.Logger
-import io.odin.consoleLogger
-import io.odin.formatter.Formatter
-import io.odin.syntax.*
+import org.typelevel.log4cats.slf4j.Slf4jLogger
 
 type Log = Logger[IO]
 object Log:
-  def resource: Resource[IO, Log] =
-    consoleLogger[IO](
-      formatter = Formatter.colorful,
-      minLevel = Level.Info
-    ).withAsync()
+  def make: IO[Log] = Slf4jLogger.create[IO]

@@ -9,6 +9,7 @@ object Dependencies {
 
     "org.typelevel" %% "cats-core" % Versions.CatsCore,
     "org.typelevel" %% "cats-effect" % Versions.CatsEffect,
+    "org.typelevel" %% "cats-collections-core" % Versions.CatsCollectionsCore,
     "org.typelevel" %% "mouse" % Versions.Mouse,
 
     "com.softwaremill.sttp.tapir" %% "tapir-core" % Versions.TapirCore,
@@ -37,14 +38,15 @@ object Dependencies {
   private object Versions {
     val Refined = "0.11.0"
     val CatsCore = "2.10.0"
-    val CatsEffect = "3.5.1"
-    val Fs2Core = "3.9.2"
+    val CatsEffect = "3.5.2"
+    val CatsCollectionsCore = "0.9.8"
+    val Fs2Core = "3.9.3"
     val CirceCore = "0.14.6"
     val PureConfigCore = "0.17.4"
     val Log4Cats = "2.6.0"
     val Logback = "1.4.11"
     val Mouse = "1.2.1"
-    val TapirCore = "1.7.4"
+    val TapirCore = "1.9.0"
     val Http4s = "0.23.15"
     val Weaver = "0.8.3"
   }

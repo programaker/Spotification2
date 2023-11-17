@@ -4,18 +4,24 @@ import sttp.tapir.*
 import sttp.tapir.json.circe.*
 import spotification2.common.GenericResponse
 import cats.effect.IO
-import sttp.tapir.server.http4s.Http4sServerInterpreter
 import org.http4s.HttpRoutes
+import cats.syntax.applicative.*
+import spotification2.common.api.RoutesInterpreter
 
-object HealthCheckApi:
-  def getHealth: Endpoint[Unit, Unit, Unit, GenericResponse, Any] =
+trait HealthCheckApi:
+  final def routes(using interpreter: RoutesInterpreter): HttpRoutes[IO] =
+    interpreter.toRoutes(getHealth.serverLogicSuccess(_ => getHealthLogic))
+
+  final def getHealth: Endpoint[Unit, Unit, Unit, GenericResponse, Any] =
     endpoint
       .description("A health-check endpoint")
       .get
       .in("health")
       .out(jsonBody[GenericResponse].description("Just a text message"))
 
-  def routes(using interpreter: Http4sServerInterpreter[IO]): HttpRoutes[IO] =
-    val program = (_: Unit) => IO.pure(GenericResponse.success("I'm doing well, thanks for asking ^_^"))
-    val serverLogic = getHealth.serverLogicSuccess(program)
-    interpreter.toRoutes(serverLogic)
+  def getHealthLogic: IO[GenericResponse]
+
+object HealthCheckApi:
+  def apply(): HealthCheckApi = new:
+    override def getHealthLogic: IO[GenericResponse] =
+      GenericResponse.success("I'm doing well, thanks for asking ^_^").pure

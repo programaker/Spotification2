@@ -19,7 +19,9 @@ lazy val root = project
 
     scalaVersion := Scala,
     libraryDependencies ++= Dependencies.libraries,
+
     Compile / mainClass := Some("spotification2.app.Spotification2HttpApp"),
+    Compile / run / fork := true,
 
     scalacOptions ++= Seq(
       "-encoding", "utf8",

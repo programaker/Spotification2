@@ -33,3 +33,4 @@ metals.sbt
 
 # others
 *.worksheet.sc
+.env

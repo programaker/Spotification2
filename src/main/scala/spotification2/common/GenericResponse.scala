@@ -17,11 +17,11 @@ object GenericResponse:
   def success[S: Show](success: S): GenericResponse = Success(success.show)
   def error[E: Show](error: E): GenericResponse = Error(error.show)
 
+  // TODO => explore Configuration: https://github.com/circe/circe/pull/1800
   given Encoder[GenericResponse] = Encoder.instance {
     case Success(message) => Json.obj("success" -> message.asJson)
     case Error(message)   => Json.obj("error" -> message.asJson)
   }
-
   given Decoder[GenericResponse] = Decoder.instance { cursor =>
     cursor
       .downField("success")

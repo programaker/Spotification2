@@ -3,7 +3,6 @@ package spotification2.common
 import sttp.tapir.Schema
 import cats.Show
 import cats.syntax.show.*
-import cats.syntax.either.*
 import io.circe.Encoder
 import io.circe.Json
 import io.circe.syntax.*

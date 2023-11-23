@@ -1,2 +1,2 @@
 #! /bin/bash
-sbt "scalafmtAll; clean; Docker/publishLocal"
+sbt "scalafmtAll; scalafixAll; clean; Docker/publishLocal"

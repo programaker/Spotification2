@@ -2,6 +2,7 @@ Seq(
   "org.scalameta" % "sbt-scalafmt" % "2.5.2",
   "io.spray" % "sbt-revolver" % "0.10.0",
   "com.github.sbt" % "sbt-native-packager" % "1.9.16",
+  "org.jmotor.sbt" % "sbt-dependency-updates" % "1.2.7",
   
   // https://github.com/philippus/sbt-dotenv/#illegal-reflective-access-warnings-and-exceptions
   "nl.gn0s1s" % "sbt-dotenv" % "3.0.0",

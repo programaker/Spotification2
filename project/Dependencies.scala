@@ -43,8 +43,8 @@ object Dependencies {
     val PureConfigCore = "0.17.4"
     val Log4Cats = "2.6.0"
     val Logback = "1.4.11"
-    val Mouse = "1.2.1"
-    val TapirCore = "1.9.1"
+    val Mouse = "1.2.2"
+    val TapirCore = "1.9.2"
     val Weaver = "0.8.3"
   }
 }

@@ -2,7 +2,7 @@
 // | | |_ bugfixes, small improvements
 // | |___ non-api changes
 // | ____ api changes
-val Spotification2 = "0.1.0"
+val Spotification2 = "0.0.1"
 
 val Scala = "3.3.1"
 

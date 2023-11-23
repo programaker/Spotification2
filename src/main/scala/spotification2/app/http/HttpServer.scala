@@ -1,16 +1,16 @@
 package spotification2.app.http
 
 import cats.effect.IO
+import cats.effect.kernel.Resource
+import cats.effect.std.Dispatcher
 import eu.timepit.refined.auto.*
+import sttp.tapir.server.ServerEndpoint
+import sttp.tapir.server.netty.cats.NettyCatsServer
+import sttp.tapir.server.netty.cats.NettyCatsServerBinding
+import sttp.tapir.server.netty.cats.NettyCatsServerInterpreter
+import sttp.tapir.server.netty.cats.NettyCatsServerOptions
 
 import spotification2.config.ServerConfig
-import cats.effect.std.Dispatcher
-import cats.effect.kernel.Resource
-import sttp.tapir.server.ServerEndpoint
-import sttp.tapir.server.netty.cats.NettyCatsServerOptions
-import sttp.tapir.server.netty.cats.NettyCatsServer
-import sttp.tapir.server.netty.cats.NettyCatsServerInterpreter
-import sttp.tapir.server.netty.cats.NettyCatsServerBinding
 
 // Http4s kinda sucks regarding performance.
 // As Tapir abstracts the http server/framework, lets find something better!

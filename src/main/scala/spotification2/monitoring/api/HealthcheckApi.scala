@@ -4,9 +4,9 @@ import cats.effect.IO
 import cats.syntax.applicative.*
 import sttp.tapir.*
 import sttp.tapir.json.circe.*
+import sttp.tapir.server.ServerEndpoint
 
 import spotification2.common.GenericResponse
-import sttp.tapir.server.ServerEndpoint
 
 trait HealthCheckApi:
   final def serverEndpoints: List[ServerEndpoint[Any, IO]] =

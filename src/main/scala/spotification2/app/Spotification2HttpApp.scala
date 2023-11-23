@@ -4,13 +4,12 @@ import cats.effect.ExitCode
 import cats.effect.IO
 import cats.effect.IOApp
 import cats.syntax.all.*
+import sttp.tapir.server.ServerEndpoint
 
 import spotification2.app.http.HttpServer
 import spotification2.config.ConfigService
 import spotification2.log.Log
 import spotification2.monitoring.api.HealthCheckApi
-
-import sttp.tapir.server.ServerEndpoint
 
 object Spotification2HttpApp extends IOApp:
   private val log = Log()

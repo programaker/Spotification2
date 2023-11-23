@@ -1,7 +1,7 @@
 package spotification2.common.api
 
-import sttp.tapir.server.http4s.Http4sServerInterpreter
 import cats.effect.IO
+import sttp.tapir.server.http4s.Http4sServerInterpreter
 
 // Http4s kinda sucks regarding performance.
 // As Tapir abstracts the http server/framework, lets find something better!

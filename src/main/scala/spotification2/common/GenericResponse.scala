@@ -1,12 +1,12 @@
 package spotification2.common
 
-import sttp.tapir.Schema
 import cats.Show
 import cats.syntax.show.*
+import io.circe.Decoder
 import io.circe.Encoder
 import io.circe.Json
 import io.circe.syntax.*
-import io.circe.Decoder
+import sttp.tapir.Schema
 
 enum GenericResponse derives Schema:
   case Success(message: String)

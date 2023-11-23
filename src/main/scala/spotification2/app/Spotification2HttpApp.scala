@@ -1,15 +1,16 @@
 package spotification2.app
 
-import cats.effect.IOApp
-import cats.effect.IO
-import spotification2.monitoring.api.HealthCheckApi
-import org.http4s.HttpRoutes
-import spotification2.config.ConfigService
-import spotification2.app.http.HttpServer
 import cats.effect.ExitCode
+import cats.effect.IO
+import cats.effect.IOApp
 import cats.syntax.all.*
+import org.http4s.HttpRoutes
+
+import spotification2.app.http.HttpServer
 import spotification2.common.api.RoutesInterpreter
+import spotification2.config.ConfigService
 import spotification2.log.Log
+import spotification2.monitoring.api.HealthCheckApi
 
 import Log.given
 import RoutesInterpreter.given

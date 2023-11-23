@@ -27,6 +27,14 @@ lazy val root = project
     dockerBaseImage := DockerImage,
     dockerExposedPorts += 8080,
 
+    // There are some gotchas when you run scalafix on compile. 
+    // Better run manually or when building the image.
+    // https://scalacenter.github.io/scalafix/docs/users/installation.html#run-scalafix-automatically-on-compile
+    //
+    // scalafixOnCompile := true,
+    // semanticdbEnabled := true,
+    // semanticdbVersion := scalafixSemanticdb.revision,
+
     scalacOptions ++= Seq(
       "-encoding", "utf8",
       "-deprecation",

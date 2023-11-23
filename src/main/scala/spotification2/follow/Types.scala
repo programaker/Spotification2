@@ -1,7 +1,8 @@
 package spotification2.follow
 
-import eu.timepit.refined.generic.Equal
 import eu.timepit.refined.api.Refined
+import eu.timepit.refined.generic.Equal
+
 import spotification2.common.syntax.refined.*
 
 // currently only `artist` is supported by Spotify.

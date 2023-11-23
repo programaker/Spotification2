@@ -1,8 +1,11 @@
 package spotification2.config
 
+import scala.concurrent.duration.FiniteDuration
+
 import eu.timepit.refined.pureconfig.*
 import pureconfig.ConfigReader
 import pureconfig.generic.derivation.default.*
+
 import spotification2.album.AlbumApiUri
 import spotification2.artist.ArtistApiUri
 import spotification2.auth.ApiTokenUri
@@ -17,8 +20,6 @@ import spotification2.me.MeApiUri
 import spotification2.playlist.PlaylistApiUri
 import spotification2.track.TrackApiUri
 import spotification2.user.UserApiUri
-
-import scala.concurrent.duration.FiniteDuration
 
 final case class AppConfig(
   authorization: AuthorizationConfig,

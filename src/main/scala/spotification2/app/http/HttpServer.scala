@@ -1,14 +1,15 @@
 package spotification2.app.http
 
 import cats.effect.IO
-import org.http4s.blaze.server.BlazeServerBuilder
-import spotification2.config.ServerConfig
 import eu.timepit.refined.auto.*
-import org.http4s.server.middleware.CORS
 import org.http4s.HttpApp
-import org.http4s.server.middleware.Logger
 import org.http4s.HttpRoutes
+import org.http4s.blaze.server.BlazeServerBuilder
 import org.http4s.server.Router
+import org.http4s.server.middleware.CORS
+import org.http4s.server.middleware.Logger
+
+import spotification2.config.ServerConfig
 
 object HttpServer:
   def run(routes: HttpRoutes[IO], serverConfig: ServerConfig): IO[Unit] =

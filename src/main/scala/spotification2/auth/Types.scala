@@ -1,14 +1,15 @@
 package spotification2.auth
 
-import eu.timepit.refined.generic.Equal
 import eu.timepit.refined.api.Refined
-import spotification2.common.syntax.refined.*
-import eu.timepit.refined.string.MatchesRegex
 import eu.timepit.refined.boolean.Or
-import spotification2.common.Opaque
-import spotification2.common.NonBlankString
+import eu.timepit.refined.generic.Equal
+import eu.timepit.refined.string.MatchesRegex
+
 import spotification2.common.HexString32
+import spotification2.common.NonBlankString
+import spotification2.common.Opaque
 import spotification2.common.UriString
+import spotification2.common.syntax.refined.*
 
 type AuthorizationResponseTypeP = Equal["code"] // it's the only one that appeared until now
 type AuthorizationResponseType = String Refined AuthorizationResponseTypeP

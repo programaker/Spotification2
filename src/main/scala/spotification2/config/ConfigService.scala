@@ -1,8 +1,8 @@
 package spotification2.config
 
 import cats.effect.IO
-import pureconfig.ConfigSource
 import mouse.feither.*
+import pureconfig.ConfigSource
 
 trait ConfigService:
   def loadConfig: IO[AppConfig]

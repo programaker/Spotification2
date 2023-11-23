@@ -1,11 +1,12 @@
 package spotification2.monitoring.api
 
+import cats.effect.IO
+import cats.syntax.applicative.*
+import org.http4s.HttpRoutes
 import sttp.tapir.*
 import sttp.tapir.json.circe.*
+
 import spotification2.common.GenericResponse
-import cats.effect.IO
-import org.http4s.HttpRoutes
-import cats.syntax.applicative.*
 import spotification2.common.api.RoutesInterpreter
 
 trait HealthCheckApi:

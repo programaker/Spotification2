@@ -4,7 +4,8 @@ Seq(
   "com.github.sbt" % "sbt-native-packager" % "1.9.16",
   
   // https://github.com/philippus/sbt-dotenv/#illegal-reflective-access-warnings-and-exceptions
-  "nl.gn0s1s" % "sbt-dotenv" % "3.0.0"
+  "nl.gn0s1s" % "sbt-dotenv" % "3.0.0",
   
-  //"ch.epfl.scala" % "sbt-scalafix" % "0.11.0" //<- worth a try... https://scalacenter.github.io/scalafix/docs/users/installation.html
+  // https://scalacenter.github.io/scalafix/docs/users/installation.html
+  "ch.epfl.scala" % "sbt-scalafix" % "0.11.1"
 ).map(addSbtPlugin)

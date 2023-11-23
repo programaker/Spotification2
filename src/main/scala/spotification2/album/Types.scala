@@ -4,6 +4,7 @@ import eu.timepit.refined.api.Refined
 import eu.timepit.refined.boolean.Or
 import eu.timepit.refined.generic.Equal
 import eu.timepit.refined.string.MatchesRegex
+
 import spotification2.common.Opaque
 import spotification2.common.SpotifyId
 import spotification2.common.UriString

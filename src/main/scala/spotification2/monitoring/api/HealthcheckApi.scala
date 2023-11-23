@@ -2,16 +2,15 @@ package spotification2.monitoring.api
 
 import cats.effect.IO
 import cats.syntax.applicative.*
-import org.http4s.HttpRoutes
 import sttp.tapir.*
 import sttp.tapir.json.circe.*
 
 import spotification2.common.GenericResponse
-import spotification2.common.api.RoutesInterpreter
+import sttp.tapir.server.ServerEndpoint
 
 trait HealthCheckApi:
-  final def routes(using interpreter: RoutesInterpreter): HttpRoutes[IO] =
-    interpreter.toRoutes(getHealth.serverLogicSuccess(_ => getHealthLogic))
+  final def serverEndpoints: List[ServerEndpoint[Any, IO]] =
+    List(getHealth.serverLogicSuccess(_ => getHealthLogic))
 
   final def getHealth: Endpoint[Unit, Unit, Unit, GenericResponse, Any] =
     endpoint

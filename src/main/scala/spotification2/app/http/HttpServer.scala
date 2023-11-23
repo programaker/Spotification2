@@ -2,29 +2,42 @@ package spotification2.app.http
 
 import cats.effect.IO
 import eu.timepit.refined.auto.*
-import org.http4s.HttpApp
-import org.http4s.HttpRoutes
-import org.http4s.blaze.server.BlazeServerBuilder
-import org.http4s.server.Router
-import org.http4s.server.middleware.CORS
-import org.http4s.server.middleware.Logger
 
 import spotification2.config.ServerConfig
+import cats.effect.std.Dispatcher
+import cats.effect.kernel.Resource
+import io.vertx.core.Vertx
+import io.vertx.ext.web.Router
+import sttp.tapir.server.vertx.cats.VertxCatsServerInterpreter
+import sttp.tapir.server.vertx.cats.VertxCatsServerInterpreter.*
+import io.vertx.core.http.HttpServerOptions
+import sttp.tapir.server.ServerEndpoint
+
+// Http4s kinda sucks regarding performance.
+// As Tapir abstracts the http server/framework, lets find something better!
+// Search service is using NettyCats. Vertx seems very good too.
+// https://www.techempower.com/benchmarks/#hw=ph&test=fortune&section=data-r22
+// https://tapir.softwaremill.com/en/latest/
 
 object HttpServer:
-  def run(routes: HttpRoutes[IO], serverConfig: ServerConfig): IO[Unit] =
-    BlazeServerBuilder[IO]
-      .bindHttp(serverConfig.port, serverConfig.host)
-      .withHttpApp(makeHttpApp(routes).pipe(addLogger).pipe(addCors))
-      .serve
-      .compile
-      .drain
+  def run(endpoints: List[ServerEndpoint[Any, IO]], serverConfig: ServerConfig): IO[Unit] =
+    Dispatcher
+      .parallel[IO]
+      .flatMap { dispatcher =>
+        Resource
+          .make {
+            IO.delay {
+              val interpreter = VertxCatsServerInterpreter[IO](dispatcher)
 
-  private def makeHttpApp(routes: HttpRoutes[IO]): HttpApp[IO] =
-    Router("/" -> routes).orNotFound
+              val vertx = Vertx.vertx()
+              val server = vertx.createHttpServer(HttpServerOptions().setHost(serverConfig.host))
+              val router = Router.router(vertx)
 
-  private def addLogger(httpApp: HttpApp[IO]): HttpApp[IO] =
-    Logger.httpApp(logHeaders = true, logBody = true)(httpApp)
-
-  private def addCors(httpApp: HttpApp[IO]): HttpApp[IO] =
-    CORS.policy(httpApp)
+              endpoints.foreach(interpreter.route(_)(router))
+              server.requestHandler(router).listen(serverConfig.port)
+            }.flatMap(_.asF[IO])
+          } { server =>
+            IO.delay(server.close).flatMap(_.asF[IO].void)
+          }
+      }
+      .use(_ => IO.never)

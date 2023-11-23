@@ -8,5 +8,5 @@ import org.typelevel.log4cats.slf4j.Slf4jFactory
 
 type Log = LoggerFactory[IO]
 object Log:
-  given Log = Slf4jFactory.create
-  inline def apply()(using Log, LoggerName): SelfAwareStructuredLogger[IO] = summon[Log].getLogger
+  private val logFactory: Log = Slf4jFactory.create
+  inline def apply()(using LoggerName): SelfAwareStructuredLogger[IO] = logFactory.getLogger

@@ -4,16 +4,13 @@ import cats.effect.ExitCode
 import cats.effect.IO
 import cats.effect.IOApp
 import cats.syntax.all.*
-import org.http4s.HttpRoutes
 
 import spotification2.app.http.HttpServer
-import spotification2.common.api.RoutesInterpreter
 import spotification2.config.ConfigService
 import spotification2.log.Log
 import spotification2.monitoring.api.HealthCheckApi
 
-import Log.given
-import RoutesInterpreter.given
+import sttp.tapir.server.ServerEndpoint
 
 object Spotification2HttpApp extends IOApp:
   private val log = Log()
@@ -23,12 +20,12 @@ object Spotification2HttpApp extends IOApp:
     val serverConfig = appConfig.map(_.server)
 
     serverConfig
-      .flatMap(HttpServer.run(allRoutes, _))
+      .flatMap(HttpServer.run(allEndpoints, _))
       .as(ExitCode.Success)
       .handleErrorWith(handleError(_) *> ExitCode.Error.pure)
 
-  private def allRoutes: HttpRoutes[IO] =
-    HealthCheckApi().routes
+  private def allEndpoints: List[ServerEndpoint[Any, IO]] = 
+    HealthCheckApi().serverEndpoints
 
   private def handleError(err: Throwable): IO[Unit] =
     log.error(err)("Application exited with error")

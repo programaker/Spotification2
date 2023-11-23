@@ -6,14 +6,11 @@ import eu.timepit.refined.auto.*
 import spotification2.config.ServerConfig
 import cats.effect.std.Dispatcher
 import cats.effect.kernel.Resource
-import io.vertx.core.Vertx
-import io.vertx.ext.web.Router
-import sttp.tapir.server.vertx.cats.VertxCatsServerInterpreter
-import sttp.tapir.server.vertx.cats.VertxCatsServerInterpreter.*
-import io.vertx.core.http.HttpServerOptions
 import sttp.tapir.server.ServerEndpoint
-import sttp.tapir.server.vertx.cats.VertxCatsServerOptions
-import io.vertx.core.http.HttpServer as vtxHttpServer
+import sttp.tapir.server.netty.cats.NettyCatsServerOptions
+import sttp.tapir.server.netty.cats.NettyCatsServer
+import sttp.tapir.server.netty.cats.NettyCatsServerInterpreter
+import sttp.tapir.server.netty.cats.NettyCatsServerBinding
 
 // Http4s kinda sucks regarding performance.
 // As Tapir abstracts the http server/framework, lets find something better!
@@ -24,27 +21,27 @@ import io.vertx.core.http.HttpServer as vtxHttpServer
 object HttpServer:
   def run(endpoints: List[ServerEndpoint[Any, IO]], serverConfig: ServerConfig): IO[Unit] =
     val makeHttpServer = (dispatcher: Dispatcher[IO]) =>
-      val serverOptions = VertxCatsServerOptions
-        .customiseInterceptors[IO](dispatcher)
+      // Server log configuration
+      // https://tapir.softwaremill.com/en/latest/server/debugging.html
+      val serverLog = NettyCatsServerOptions.defaultServerLog[IO]
+
+      // Interceptors configuration
+      // v1 had CORS, so we might need the CORSInterceptor
+      // https://tapir.softwaremill.com/en/latest/server/interceptors.html
+      val serverOptions = NettyCatsServerOptions
+        .customiseInterceptors(dispatcher)
+        .serverLog(serverLog)
         .options
 
-      val httpServerOptions = HttpServerOptions()
-        .setHost(serverConfig.host)
-        .setLogActivity(true)
+      val interpreter = NettyCatsServerInterpreter(serverOptions)
 
-      val vertx = Vertx.vertx()
-      val server = vertx.createHttpServer(httpServerOptions)
-      val router = Router.router(vertx)
-      val interpreter = VertxCatsServerInterpreter[IO](serverOptions)
+      NettyCatsServer(serverOptions)
+        .host(serverConfig.host)
+        .port(serverConfig.port)
+        .addRoute(interpreter.toRoute(endpoints))
+        .start()
 
-      endpoints.foreach(interpreter.route(_)(router))
-      server
-        .requestHandler(router)
-        .listen(serverConfig.port)
-        .pipe(IO.delay)
-        .flatMap(_.asF[IO])
-
-    val releaseHttpServer = (server: vtxHttpServer) => IO.delay(server.close).flatMap(_.asF[IO].void)
+    val releaseHttpServer = (server: NettyCatsServerBinding[IO]) => server.stop()
 
     Dispatcher
       .parallel[IO]

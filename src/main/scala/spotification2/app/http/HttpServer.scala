@@ -12,6 +12,8 @@ import sttp.tapir.server.vertx.cats.VertxCatsServerInterpreter
 import sttp.tapir.server.vertx.cats.VertxCatsServerInterpreter.*
 import io.vertx.core.http.HttpServerOptions
 import sttp.tapir.server.ServerEndpoint
+import sttp.tapir.server.vertx.cats.VertxCatsServerOptions
+import io.vertx.core.http.HttpServer as vtxHttpServer
 
 // Http4s kinda sucks regarding performance.
 // As Tapir abstracts the http server/framework, lets find something better!
@@ -21,23 +23,30 @@ import sttp.tapir.server.ServerEndpoint
 
 object HttpServer:
   def run(endpoints: List[ServerEndpoint[Any, IO]], serverConfig: ServerConfig): IO[Unit] =
+    val makeHttpServer = (dispatcher: Dispatcher[IO]) =>
+      val serverOptions = VertxCatsServerOptions
+        .customiseInterceptors[IO](dispatcher)
+        .options
+
+      val httpServerOptions = HttpServerOptions()
+        .setHost(serverConfig.host)
+        .setLogActivity(true)
+
+      val vertx = Vertx.vertx()
+      val server = vertx.createHttpServer(httpServerOptions)
+      val router = Router.router(vertx)
+      val interpreter = VertxCatsServerInterpreter[IO](serverOptions)
+
+      endpoints.foreach(interpreter.route(_)(router))
+      server
+        .requestHandler(router)
+        .listen(serverConfig.port)
+        .pipe(IO.delay)
+        .flatMap(_.asF[IO])
+
+    val releaseHttpServer = (server: vtxHttpServer) => IO.delay(server.close).flatMap(_.asF[IO].void)
+
     Dispatcher
       .parallel[IO]
-      .flatMap { dispatcher =>
-        Resource
-          .make {
-            IO.delay {
-              val interpreter = VertxCatsServerInterpreter[IO](dispatcher)
-
-              val vertx = Vertx.vertx()
-              val server = vertx.createHttpServer(HttpServerOptions().setHost(serverConfig.host))
-              val router = Router.router(vertx)
-
-              endpoints.foreach(interpreter.route(_)(router))
-              server.requestHandler(router).listen(serverConfig.port)
-            }.flatMap(_.asF[IO])
-          } { server =>
-            IO.delay(server.close).flatMap(_.asF[IO].void)
-          }
-      }
+      .flatMap(makeHttpServer(_).pipe(Resource.make(_)(releaseHttpServer)))
       .use(_ => IO.never)

@@ -22,8 +22,9 @@ object Dependencies {
     "io.circe" %% "circe-parser" % Versions.CirceCore,
     "io.circe" %% "circe-refined" % Versions.CirceCore,
 
-    "com.disneystreaming" %% "weaver-cats" % Versions.Weaver % Test,
-    "com.disneystreaming" %% "weaver-scalacheck" % Versions.Weaver % Test,
+    "org.scalameta" %% "munit" % Versions.MUnit % Test,
+    "org.scalameta" %% "munit-scalacheck" % Versions.MUnit % Test,
+    "org.typelevel" %% "munit-cats-effect-3" % Versions.MUnitCatsEffect % Test,
 
     "com.github.pureconfig" %% "pureconfig-core" % Versions.PureConfigCore,
 
@@ -45,6 +46,7 @@ object Dependencies {
     val Logback = "1.4.11"
     val Mouse = "1.2.2"
     val TapirCore = "1.9.2"
-    val Weaver = "0.8.3"
+    val MUnit = "1.0.0-M10"
+    val MUnitCatsEffect = "1.0.7"
   }
 }

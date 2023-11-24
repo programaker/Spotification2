@@ -16,6 +16,8 @@ object Dependencies {
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-netty-server-cats" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-sttp-client" % Versions.TapirCore,
+    "com.softwaremill.sttp.tapir" %% "tapir-sttp-stub-server" % Versions.TapirCore % Test,
+    "com.softwaremill.sttp.client3" %% "circe" % Versions.SttpCirce % Test,
 
     "io.circe" %% "circe-core" % Versions.CirceCore,
     "io.circe" %% "circe-generic" % Versions.CirceCore,
@@ -48,5 +50,6 @@ object Dependencies {
     val TapirCore = "1.9.2"
     val MUnit = "1.0.0-M10"
     val MUnitCatsEffect = "1.0.7"
+    val SttpCirce = "3.9.1"
   }
 }

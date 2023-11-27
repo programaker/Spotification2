@@ -48,7 +48,7 @@ object Dependencies {
     val Logback = "1.4.11"
     val Mouse = "1.2.2"
     val TapirCore = "1.9.2"
-    val MUnit = "1.0.0-M10"
+    val MUnit = "0.7.29"
     val MUnitCatsEffect = "1.0.7"
     val SttpCirce = "3.9.1"
   }

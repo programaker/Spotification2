@@ -12,9 +12,7 @@ import cats.effect.kernel.Resource
 import fs2.io.file.Path
 import fs2.io.file.Files
 import sttp.model.StatusCode
-import io.circe.syntax.*
-import io.circe.Json
-import mouse.feither.*
+import io.circe.parser.*
 import cats.syntax.all.*
 
 final class HealthCheckApiSuite extends CatsEffectSuite:
@@ -24,8 +22,10 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
       .response(asJson[GenericResponse])
       .send(getHealthBackendStub(api()))
 
-    response.map(_.code).pipe(assertIO(_, StatusCode.Ok)) *>
-      response.map(_.body).mapIn(_.asJson).pipe(assertIO(_, jsonResponse().asRight))
+    val status = response.map(_.code)
+    val body = response.map(_.body.leftMap(_.toString()))
+
+    assertIO(status, StatusCode.Ok) *> assertIO(body, jsonResponse())
   }
 
   val api = ResourceSuiteLocalFixture("api", apiResource)
@@ -36,13 +36,13 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
   def apiResource: Resource[IO, HealthCheckApi] =
     Resource.pure(HealthCheckApi())
 
-  def jsonResponseResource: Resource[IO, Json] =
+  def jsonResponseResource: Resource[IO, Either[String, GenericResponse]] =
     Files[IO]
       .readUtf8Lines(Path("src/test/resources/monitoring/api/getHealthResponse.json"))
       .compile
       .foldMonoid
+      .map(decode[GenericResponse](_).leftMap(_.toString()))
       .toResource
-      .map(_.asJson)
 
   def getHealthBackendStub(api: HealthCheckApi): SttpBackend[IO, Nothing] =
     TapirStubInterpreter(SttpBackendStub(new CatsMonadError[IO]()))

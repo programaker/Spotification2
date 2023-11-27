@@ -16,14 +16,17 @@ object Dependencies {
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-netty-server-cats" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-sttp-client" % Versions.TapirCore,
+    "com.softwaremill.sttp.tapir" %% "tapir-sttp-stub-server" % Versions.TapirCore % Test,
+    "com.softwaremill.sttp.client3" %% "circe" % Versions.SttpCirce % Test,
 
     "io.circe" %% "circe-core" % Versions.CirceCore,
     "io.circe" %% "circe-generic" % Versions.CirceCore,
     "io.circe" %% "circe-parser" % Versions.CirceCore,
     "io.circe" %% "circe-refined" % Versions.CirceCore,
 
-    "com.disneystreaming" %% "weaver-cats" % Versions.Weaver % Test,
-    "com.disneystreaming" %% "weaver-scalacheck" % Versions.Weaver % Test,
+    "org.scalameta" %% "munit" % Versions.MUnit % Test,
+    "org.scalameta" %% "munit-scalacheck" % Versions.MUnit % Test,
+    "org.typelevel" %% "munit-cats-effect-3" % Versions.MUnitCatsEffect % Test,
 
     "com.github.pureconfig" %% "pureconfig-core" % Versions.PureConfigCore,
 
@@ -45,6 +48,8 @@ object Dependencies {
     val Logback = "1.4.11"
     val Mouse = "1.2.2"
     val TapirCore = "1.9.2"
-    val Weaver = "0.8.3"
+    val MUnit = "0.7.29"
+    val MUnitCatsEffect = "1.0.7"
+    val SttpCirce = "3.9.1"
   }
 }

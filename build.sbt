@@ -31,6 +31,8 @@ lazy val root = project
     // Better run manually or when building the image.
     // https://scalacenter.github.io/scalafix/docs/users/installation.html#run-scalafix-automatically-on-compile
     // scalafixOnCompile := true,
+
+    // To run scalafix from sbt console
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
 

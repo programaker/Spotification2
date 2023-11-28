@@ -21,7 +21,7 @@ import spotification2.track.TrackApiUri
 import spotification2.user.UserApiUri
 
 final case class AppConfig(
-  authorization: AuthorizationConfig,
+  authorization: AuthConfig,
   playlist: PlaylistConfig,
   artist: ArtistConfig,
   album: AlbumConfig,
@@ -32,7 +32,7 @@ final case class AppConfig(
   client: ClientConfig
 ) derives ConfigReader
 
-final case class AuthorizationConfig(
+final case class AuthConfig(
   clientId: ClientId,
   clientSecret: ClientSecret,
   redirectUri: RedirectUri,

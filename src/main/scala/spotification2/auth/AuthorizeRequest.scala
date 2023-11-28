@@ -6,7 +6,7 @@ import spotification2.common.json.SpotifyJSonConfig.given
 import io.circe.refined.*
 import sttp.tapir.codec.refined.*
 import sttp.tapir.Schema
-import spotification2.config.AuthorizationConfig
+import spotification2.config.AuthConfig
 
 final case class AuthorizeRequest(
   clientId: ClientId,
@@ -19,7 +19,7 @@ final case class AuthorizeRequest(
       Schema
 
 object AuthorizeRequest:
-  def make(cfg: AuthorizationConfig): AuthorizeRequest =
+  def make(cfg: AuthConfig): AuthorizeRequest =
     AuthorizeRequest(
       clientId = cfg.clientId,
       redirectUri = cfg.redirectUri,

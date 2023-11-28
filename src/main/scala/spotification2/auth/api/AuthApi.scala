@@ -17,6 +17,7 @@ import spotification2.common.BIO
 import spotification2.auth.AuthorizeErrorResponse
 import spotification2.common.NonBlankString
 import spotification2.auth.AuthService
+import spotification2.config.AuthConfig
 
 private def baseEndpoint =
   endpoint
@@ -91,7 +92,7 @@ trait AuthApi extends ListServerEndpoints:
     ).map(_.mkServerEndpoint)
 
 object AuthApi:
-  def apply(authService: AuthService): AuthApi = new:
+  def apply(authService: AuthService, authConfig: AuthConfig): AuthApi = new:
     override def getSpotifyAuthorization: GetSpotifyAuthorization = new:
       override def logic: Either[GenericError, UriString] = ???
 

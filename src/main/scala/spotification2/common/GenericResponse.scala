@@ -4,27 +4,14 @@ import cats.Show
 import cats.syntax.show.*
 import io.circe.Decoder
 import io.circe.Encoder
-import io.circe.Json
-import io.circe.syntax.*
 import sttp.tapir.Schema
+import io.circe.derivation.ConfiguredCodec
+import spotification2.common.json.SpotifyJSonConfig.given
 
-enum GenericResponse derives Schema:
-  case Success(message: String)
-  case Error(message: String)
+final case class GenericSuccess(success: String) derives ConfiguredCodec, Schema
+object GenericSuccess:
+  def make[S: Show](success: S): GenericSuccess = GenericSuccess(success.show)
 
-object GenericResponse:
-  def success[S: Show](success: S): GenericResponse = Success(success.show)
-  def error[E: Show](error: E): GenericResponse = Error(error.show)
-
-  // TODO => explore Configuration: https://github.com/circe/circe/pull/1800
-  given Encoder[GenericResponse] = Encoder.instance {
-    case Success(message) => Json.obj("success" -> message.asJson)
-    case Error(message)   => Json.obj("error" -> message.asJson)
-  }
-  given Decoder[GenericResponse] = Decoder.instance { cursor =>
-    cursor
-      .downField("success")
-      .as[String]
-      .map(GenericResponse.success)
-      .orElse(cursor.downField("error").as[String].map(GenericResponse.error))
-  }
+final case class GenericError(error: String) derives ConfiguredCodec, Schema
+object GenericError:
+  def make[S: Show](error: S): GenericError = GenericError(error.show)

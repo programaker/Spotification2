@@ -20,7 +20,7 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
   test("should always return a simple success message") {
     val response = basicRequest
       .get(uri"http://test.com/health")
-      .response(asJson[GenericResponse])
+      .response(asJson[GenericSuccess])
       .send(getHealthBackendStub(apiFix()))
 
     val status = response.map(_.code)
@@ -37,12 +37,12 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
   def apiResource: Resource[IO, HealthCheckApi] =
     Resource.pure(HealthCheckApi())
 
-  def jsonResponseResource: Resource[IO, Either[String, GenericResponse]] =
+  def jsonResponseResource: Resource[IO, Either[String, GenericSuccess]] =
     Files[IO]
       .readUtf8Lines(Path("src/test/resources/monitoring/api/getHealthResponse.json"))
       .compile
       .foldMonoid
-      .map(decode[GenericResponse](_).leftMap(_.toString()))
+      .map(decode[GenericSuccess](_).leftMap(_.toString()))
       .toResource
 
   def getHealthBackendStub(api: HealthCheckApi): Backend[IO] =

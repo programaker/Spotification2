@@ -12,6 +12,7 @@ import eu.timepit.refined.string.IPv4
 import eu.timepit.refined.string.MatchesRegex
 import eu.timepit.refined.string.Trimmed
 import eu.timepit.refined.string.Uri
+import cats.effect.IO
 
 type NonBlankStringP = MinSize[1] And Not[MatchesRegex["""^\s+$"""]] And Trimmed
 type NonBlankString = String Refined NonBlankStringP
@@ -44,3 +45,6 @@ type FieldsToReturn = String Refined FieldsToReturnP
 // the Spotify URI for an artist, track, album, playlist, etc
 type SpotifyIdP = MatchesRegex["^[0-9a-zA-Z]+$"]
 type SpotifyId = String Refined SpotifyIdP
+
+/** Bifunctor IO, but just an alias for an `IO[Either[E, A]]` */
+type BIO[+E, +A] = IO[Either[E, A]]

@@ -20,18 +20,18 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
     val response = basicRequest
       .get(uri"http://test.com/health")
       .response(asJson[GenericResponse])
-      .send(getHealthBackendStub(api()))
+      .send(getHealthBackendStub(apiFix()))
 
     val status = response.map(_.code)
     val body = response.map(_.body.leftMap(_.toString()))
 
-    assertIO(status, StatusCode.Ok) *> assertIO(body, jsonResponse())
+    assertIO(status, StatusCode.Ok) *> assertIO(body, expectedResponseFix())
   }
 
-  val api = ResourceSuiteLocalFixture("api", apiResource)
-  val jsonResponse = ResourceSuiteLocalFixture("response", jsonResponseResource)
+  val apiFix = ResourceSuiteLocalFixture("api", apiResource)
+  val expectedResponseFix = ResourceSuiteLocalFixture("response", jsonResponseResource)
 
-  override def munitFixtures = List(api, jsonResponse)
+  override def munitFixtures = List(apiFix, expectedResponseFix)
 
   def apiResource: Resource[IO, HealthCheckApi] =
     Resource.pure(HealthCheckApi())
@@ -46,5 +46,5 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
 
   def getHealthBackendStub(api: HealthCheckApi): SttpBackend[IO, Nothing] =
     TapirStubInterpreter(SttpBackendStub(new CatsMonadError[IO]()))
-      .whenServerEndpointRunLogic(api.getHealth.server)
+      .whenServerEndpointRunLogic(api.getHealth.mkServerEndpoint)
       .backend()

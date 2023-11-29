@@ -1,11 +1,12 @@
 package spotification2.auth
 
-import spotification2.common.NonBlankString
 import io.circe.derivation.ConfiguredCodec
-import spotification2.common.json.SpotifyJSonConfig.given
 import io.circe.refined.*
-import sttp.tapir.codec.refined.*
 import sttp.tapir.Schema
+import sttp.tapir.codec.refined.*
+
+import spotification2.common.NonBlankString
+import spotification2.common.json.SpotifyJSonConfig.given
 import spotification2.config.AuthConfig
 
 final case class AuthorizeRequest(

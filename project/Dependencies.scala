@@ -35,6 +35,8 @@ object Dependencies {
 
     "org.typelevel" %% "log4cats-slf4j" % Versions.Log4Cats,
     "ch.qos.logback" % "logback-classic" % Versions.Logback,
+
+    "io.chrisdavenport" %% "cats-scalacheck" % Versions.CatsScalacheck % Test,
   )
 
   private object Versions {

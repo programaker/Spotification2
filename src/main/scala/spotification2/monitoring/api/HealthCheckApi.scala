@@ -6,9 +6,9 @@ import sttp.tapir.*
 import sttp.tapir.json.circe.*
 import sttp.tapir.server.ServerEndpoint
 
-import spotification2.common.api.MkServerEndpoint
+import spotification2.common.api.GenericSuccess
 import spotification2.common.api.ListServerEndpoints
-import spotification2.common.GenericSuccess
+import spotification2.common.api.MkServerEndpoint
 
 trait GetHealth extends MkServerEndpoint:
   final def mkEndpoint =

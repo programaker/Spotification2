@@ -35,6 +35,8 @@ object Dependencies {
 
     "org.typelevel" %% "log4cats-slf4j" % Versions.Log4Cats,
     "ch.qos.logback" % "logback-classic" % Versions.Logback,
+
+    "io.chrisdavenport" %% "cats-scalacheck" % Versions.CatsScalacheck % Test,
   )
 
   private object Versions {
@@ -52,5 +54,6 @@ object Dependencies {
     val MUnit = "0.7.29"
     val MUnitCatsEffect = "1.0.7"
     val SttpCirce = "3.9.1"
+    val CatsScalacheck = "0.3.2"
   }
 }

@@ -1,22 +1,25 @@
 package spotification2.auth.api
 
-import spotification2.common.api.MkServerEndpoint
-import spotification2.common.api.ListServerEndpoints
 import cats.effect.IO
-import sttp.tapir.server.ServerEndpoint
-import sttp.tapir.*
-import sttp.tapir.json.circe.*
-import sttp.tapir.EndpointInput.Query
-import spotification2.common.UriString
+import cats.syntax.all.*
 import io.circe.refined.*
-import sttp.tapir.codec.refined.*
 import sttp.model.StatusCode
+import sttp.tapir.*
+import sttp.tapir.EndpointInput.Query
+import sttp.tapir.codec.refined.*
+import sttp.tapir.json.circe.*
+import sttp.tapir.server.ServerEndpoint
+
 import spotification2.auth.AccessTokenResponse
-import spotification2.common.GenericError
-import spotification2.common.BIO
-import spotification2.auth.AuthorizeErrorResponse
-import spotification2.common.NonBlankString
 import spotification2.auth.AuthService
+import spotification2.auth.AuthorizeErrorResponse
+import spotification2.auth.AuthorizeRequest
+import spotification2.common.BIO
+import spotification2.common.NonBlankString
+import spotification2.common.UriString
+import spotification2.common.api.GenericError
+import spotification2.common.api.ListServerEndpoints
+import spotification2.common.api.MkServerEndpoint
 import spotification2.config.AuthConfig
 
 private def baseEndpoint =
@@ -94,7 +97,10 @@ trait AuthApi extends ListServerEndpoints:
 object AuthApi:
   def apply(authService: AuthService, authConfig: AuthConfig): AuthApi = new:
     override def getSpotifyAuthorization: GetSpotifyAuthorization = new:
-      override def logic: Either[GenericError, UriString] = ???
+      override def logic: Either[GenericError, UriString] =
+        AuthService
+          .makeAuthorizeUri(authConfig.authorizeUri, AuthorizeRequest.make(authConfig))
+          .leftMap(_.error.pipe(GenericError.apply))
 
     override def getCallback: GetCallback = new:
       override def logic(

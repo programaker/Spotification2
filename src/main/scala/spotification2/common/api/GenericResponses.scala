@@ -1,11 +1,12 @@
-package spotification2.common
+package spotification2.common.api
 
 import cats.Show
 import cats.syntax.show.*
 import io.circe.Decoder
 import io.circe.Encoder
-import sttp.tapir.Schema
 import io.circe.derivation.ConfiguredCodec
+import sttp.tapir.Schema
+
 import spotification2.common.json.SpotifyJSonConfig.given
 
 final case class GenericSuccess(success: String) derives ConfiguredCodec, Schema

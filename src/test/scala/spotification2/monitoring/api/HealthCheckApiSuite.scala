@@ -1,19 +1,20 @@
 package spotification2.monitoring.api
 
-import munit.CatsEffectSuite
-import sttp.tapir.server.stub.TapirStubInterpreter
-import sttp.client3.testing.SttpBackendStub
 import cats.effect.IO
-import sttp.tapir.integ.cats.effect.CatsMonadError
+import cats.effect.kernel.Resource
+import cats.syntax.all.*
+import fs2.io.file.Files
+import fs2.io.file.Path
+import io.circe.parser.*
+import munit.CatsEffectSuite
 import sttp.client3.*
 import sttp.client3.circe.*
-import spotification2.common.GenericSuccess
-import cats.effect.kernel.Resource
-import fs2.io.file.Path
-import fs2.io.file.Files
+import sttp.client3.testing.SttpBackendStub
 import sttp.model.StatusCode
-import io.circe.parser.*
-import cats.syntax.all.*
+import sttp.tapir.integ.cats.effect.CatsMonadError
+import sttp.tapir.server.stub.TapirStubInterpreter
+
+import spotification2.common.api.GenericSuccess
 
 final class HealthCheckApiSuite extends CatsEffectSuite:
   test("should always return a simple success message") {

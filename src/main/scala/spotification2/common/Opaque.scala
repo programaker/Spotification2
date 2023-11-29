@@ -2,11 +2,11 @@ package spotification2.common
 
 import cats.Show
 import cats.kernel.Eq
+import io.circe.Codec
 import io.circe.Decoder
 import io.circe.Encoder
 import pureconfig.ConfigReader
 import sttp.tapir.Schema
-import io.circe.Codec
 
 /** Generates an `opaque type` with `apply` and `value` to wrap/unwrap a value in it, in addition to some basic given
   * instances.

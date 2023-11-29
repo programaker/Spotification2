@@ -1,7 +1,7 @@
 package spotification2.common.api
 
-import sttp.tapir.server.ServerEndpoint
 import cats.effect.IO
+import sttp.tapir.server.ServerEndpoint
 
 trait MkServerEndpoint:
   def mkServerEndpoint: ServerEndpoint[Any, IO]

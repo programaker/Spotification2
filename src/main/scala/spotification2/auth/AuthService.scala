@@ -1,22 +1,22 @@
 package spotification2.auth
 
+import java.net.URI
 import java.net.URLEncoder
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpRequest.BodyPublishers
+import java.net.http.HttpResponse.BodyHandlers
 import java.nio.charset.StandardCharsets
+import java.util.Base64
 
+import cats.effect.IO
 import cats.syntax.all.*
 import eu.timepit.refined.cats.*
+import io.circe.parser.*
 
 import spotification2.common.RefinementError
 import spotification2.common.UriString
 import spotification2.common.syntax.refined.*
-import cats.effect.IO
-import java.util.Base64
-import io.circe.parser.*
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.URI
-import java.net.http.HttpRequest.BodyPublishers
-import java.net.http.HttpResponse.BodyHandlers
 
 trait AuthService:
   def requestAccessToken(req: AccessTokenRequest): IO[AccessTokenResponse]

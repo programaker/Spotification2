@@ -13,7 +13,7 @@ import spotification2.common.syntax.refined.*
 trait AuthService
 
 object AuthService:
-  def makeAuthorizeUri(authorizeUri: AuthorizeUri, req: AuthorizeRequest): Either[RefinementError, UriString] =
+  def makeAuthorizeUri(req: AuthorizeRequest): Either[RefinementError, UriString] =
     // Sttp Uri should be able to encode query params, but in my tests
     // URIs are not properly encoded:
     //
@@ -25,16 +25,17 @@ object AuthService:
     // >>> String = https%3A%2F%2Fbar.com <- encoded `:` and `//` correctly
     val encode = URLEncoder.encode(_: String, StandardCharsets.UTF_8)
 
+    val query = req.query
     Iterator(
-      req.clientId.show.some.map("client_id" -> _),
-      req.responseType.show.some.map("response_type" -> _),
-      req.redirectUri.show.some.map("redirect_uri" -> _),
-      req.showDialog.map(_.show.pipe("show_dialog" -> _)),
-      req.state.map(_.show.pipe("state" -> _)),
-      req.scope.map(_.mkString_(" ").pipe("scope" -> _))
+      query.clientId.show.some.map("client_id" -> _),
+      query.responseType.show.some.map("response_type" -> _),
+      query.redirectUri.show.some.map("redirect_uri" -> _),
+      query.showDialog.map(_.show.pipe("show_dialog" -> _)),
+      query.state.map(_.show.pipe("state" -> _)),
+      query.scope.map(_.mkString_(" ").pipe("scope" -> _))
     )
       .flatten
       .map((k, v) => show"$k=${encode(v)}")
       .toList
-      .foldSmash(show"$authorizeUri?", "&", "")
+      .foldSmash(show"${req.authorizeUri}?", "&", "")
       .refineE

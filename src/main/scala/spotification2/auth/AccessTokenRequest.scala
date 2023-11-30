@@ -1,9 +1,9 @@
 package spotification2.auth
 
 import spotification2.common.NonBlankString
+import spotification2.config.AuthConfig
 
 import AccessTokenRequest.*
-import spotification2.config.AuthConfig
 
 final case class AccessTokenRequest(apiTokenUri: ApiTokenUri, header: Header, body: Body)
 

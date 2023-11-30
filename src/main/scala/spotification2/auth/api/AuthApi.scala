@@ -3,6 +3,7 @@ package spotification2.auth.api
 import cats.effect.IO
 import cats.syntax.all.*
 import io.circe.refined.*
+import mouse.feither.*
 import sttp.model.StatusCode
 import sttp.tapir.*
 import sttp.tapir.EndpointInput.Query
@@ -10,6 +11,7 @@ import sttp.tapir.codec.refined.*
 import sttp.tapir.json.circe.*
 import sttp.tapir.server.ServerEndpoint
 
+import spotification2.auth.AccessTokenRequest
 import spotification2.auth.AccessTokenResponse
 import spotification2.auth.AuthService
 import spotification2.auth.AuthorizeErrorResponse
@@ -21,8 +23,6 @@ import spotification2.common.api.GenericError
 import spotification2.common.api.ListServerEndpoints
 import spotification2.common.api.MkServerEndpoint
 import spotification2.config.AuthConfig
-import spotification2.auth.AccessTokenRequest
-import mouse.feither.*
 
 private def baseEndpoint =
   endpoint

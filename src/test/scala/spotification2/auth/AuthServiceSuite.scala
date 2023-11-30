@@ -3,11 +3,11 @@ package spotification2.auth
 import cats.syntax.all.*
 import munit.CatsEffectSuite
 
+import spotification2.common.HexString32P
+import spotification2.common.RefinementError
 import spotification2.common.UriString
 import spotification2.common.UriStringP
 import spotification2.common.syntax.refined.*
-import spotification2.common.HexString32P
-import spotification2.common.RefinementError
 
 final class AuthServiceSuite extends CatsEffectSuite:
   test("should make the authorize URI") {

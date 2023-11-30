@@ -21,13 +21,11 @@ final class AuthServiceSuite extends CatsEffectSuite:
       "playlist-read-private"
     ).map(_.refineU[ScopeP]).some
 
-    val req = AuthorizeRequest(
+    val req = AuthorizeRequest.make(
+      authorizeUri = authorizeUri,
       clientId = clientId,
       redirectUri = redirectUri,
-      responseType = AuthorizationResponseType.Code,
-      state = None,
-      scope = scope,
-      showDialog = None
+      scope = scope
     )
 
     val expected =
@@ -39,6 +37,6 @@ final class AuthServiceSuite extends CatsEffectSuite:
         .refineU[UriStringP]
         .asRight[RefinementError]
 
-    val actual = AuthService.makeAuthorizeUri(authorizeUri, req)
+    val actual = AuthService.makeAuthorizeUri(req)
     assertEquals(actual, expected)
   }

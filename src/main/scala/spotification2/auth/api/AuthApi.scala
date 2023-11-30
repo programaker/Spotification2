@@ -99,7 +99,7 @@ object AuthApi:
     override def getSpotifyAuthorization: GetSpotifyAuthorization = new:
       override def logic: Either[GenericError, UriString] =
         AuthService
-          .makeAuthorizeUri(authConfig.authorizeUri, AuthorizeRequest.make(authConfig))
+          .makeAuthorizeUri(AuthorizeRequest.fromConfig(authConfig))
           .leftMap(GenericError.make)
 
     override def getCallback: GetCallback = new:

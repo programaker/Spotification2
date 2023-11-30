@@ -21,6 +21,8 @@ import spotification2.common.api.GenericError
 import spotification2.common.api.ListServerEndpoints
 import spotification2.common.api.MkServerEndpoint
 import spotification2.config.AuthConfig
+import spotification2.auth.AccessTokenRequest
+import mouse.feither.*
 
 private def baseEndpoint =
   endpoint
@@ -107,7 +109,10 @@ object AuthApi:
         code: NonBlankString,
         state: Option[NonBlankString]
       ): BIO[GenericError, AccessTokenResponse] =
-        ???
+        authService
+          .requestAccessToken(AccessTokenRequest.fromConfig(authConfig, code))
+          .attempt
+          .leftMapIn(GenericError.fromThrowable)
 
     override def getErrorCallback: GetErrorCallback = new:
       override def logic(

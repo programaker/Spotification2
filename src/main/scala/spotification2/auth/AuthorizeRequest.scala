@@ -17,14 +17,6 @@ object AuthorizeRequest:
     showDialog: Option[Boolean]
   )
 
-  def fromConfig(cfg: AuthConfig): AuthorizeRequest =
-    make(
-      authorizeUri = cfg.authorizeUri,
-      clientId = cfg.clientId,
-      redirectUri = cfg.redirectUri,
-      scope = cfg.scopes
-    )
-
   def make(
     authorizeUri: AuthorizeUri,
     clientId: ClientId,
@@ -41,4 +33,12 @@ object AuthorizeRequest:
         scope = scope,
         showDialog = None // defaults to false, which is what we want
       )
+    )
+
+  def fromConfig(cfg: AuthConfig): AuthorizeRequest =
+    make(
+      authorizeUri = cfg.authorizeUri,
+      clientId = cfg.clientId,
+      redirectUri = cfg.redirectUri,
+      scope = cfg.scopes
     )

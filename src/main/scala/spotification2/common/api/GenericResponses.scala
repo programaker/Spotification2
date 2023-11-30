@@ -16,3 +16,4 @@ object GenericSuccess:
 final case class GenericError(error: String) derives ConfiguredCodec, Schema
 object GenericError:
   def make[S: Show](error: S): GenericError = GenericError(error.show)
+  def fromThrowable(error: Throwable): GenericError = GenericError(error.getMessage())

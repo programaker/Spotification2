@@ -100,7 +100,7 @@ object AuthApi:
       override def logic: Either[GenericError, UriString] =
         AuthService
           .makeAuthorizeUri(authConfig.authorizeUri, AuthorizeRequest.make(authConfig))
-          .leftMap(_.error.pipe(GenericError.apply))
+          .leftMap(GenericError.make)
 
     override def getCallback: GetCallback = new:
       override def logic(

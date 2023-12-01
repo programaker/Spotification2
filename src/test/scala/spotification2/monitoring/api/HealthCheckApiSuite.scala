@@ -47,5 +47,5 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
 
   def getHealthBackendStub(api: HealthCheckApi): SttpBackend[IO, Nothing] =
     TapirStubInterpreter(SttpBackendStub(new CatsMonadError[IO]()))
-      .whenServerEndpointRunLogic(api.getHealth.mkServerEndpoint)
+      .whenServerEndpointRunLogic(api.getHealthServer)
       .backend()

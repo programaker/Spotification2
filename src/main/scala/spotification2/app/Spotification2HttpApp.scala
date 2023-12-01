@@ -23,8 +23,8 @@ object Spotification2HttpApp extends IOApp:
       .as(ExitCode.Success)
       .handleErrorWith(handleError(_) *> ExitCode.Error.pure)
 
-  private def allEndpoints: List[ServerEndpoint[Any, IO]] = 
-    HealthCheckApi().serverEndpoints
+  private def allEndpoints: List[ServerEndpoint[Any, IO]] =
+    HealthCheckApi().apiServerEndpoints
 
   private def handleError(err: Throwable): IO[Unit] =
     log.error(err)("Application exited with error")

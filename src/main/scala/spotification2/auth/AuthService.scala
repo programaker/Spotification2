@@ -62,7 +62,6 @@ object AuthService:
       .toList
       .mkString_(show"${req.authorizeUri}?", "&", "")
       .refineE
-end AuthService
 
 ///
 
@@ -117,4 +116,3 @@ object WorkaroundService:
   def base64Credentials(clientId: ClientId, clientSecret: ClientSecret): String =
     val s = show"$clientId:$clientSecret"
     Base64.getEncoder.encodeToString(s.getBytes(StandardCharsets.UTF_8))
-end WorkaroundService

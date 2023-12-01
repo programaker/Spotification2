@@ -6,31 +6,28 @@ import sttp.tapir.*
 import sttp.tapir.json.circe.*
 import sttp.tapir.server.ServerEndpoint
 
+import spotification2.common.api.ApiServerEndpoints
 import spotification2.common.api.GenericSuccess
-import spotification2.common.api.ListServerEndpoints
-import spotification2.common.api.MkServerEndpoint
 
-trait GetHealth extends MkServerEndpoint:
-  final def mkEndpoint =
+trait GetHealth:
+  val getHealth =
     endpoint
       .description("A health-check endpoint")
       .get
       .in("health")
       .out(jsonBody[GenericSuccess].description("Just a text message"))
 
-  final def mkServerEndpoint: ServerEndpoint[Any, IO] =
-    mkEndpoint.serverLogicSuccess(_ => logic)
+  val getHealthServer: ServerEndpoint[Any, IO] =
+    getHealth.serverLogicSuccess(_ => getHealthLogic)
 
-  def logic: IO[GenericSuccess]
+  def getHealthLogic: IO[GenericSuccess]
 
 ///
 
-trait HealthCheckApi extends ListServerEndpoints:
-  def getHealth: GetHealth
-  override final def serverEndpoints: List[ServerEndpoint[Any, IO]] = List(getHealth.mkServerEndpoint)
+trait HealthCheckApi extends ApiServerEndpoints, GetHealth:
+  override def apiServerEndpoints: List[ServerEndpoint[Any, IO]] = List(getHealthServer)
 
 object HealthCheckApi:
   def apply(): HealthCheckApi = new:
-    override def getHealth: GetHealth = new:
-      override def logic: IO[GenericSuccess] =
-        GenericSuccess.make("I'm doing well, thanks for asking ^_^").pure
+    override val getHealthLogic: IO[GenericSuccess] =
+      GenericSuccess.make("I'm doing well, thanks for asking ^_^").pure

@@ -19,104 +19,100 @@ import spotification2.auth.AuthorizeRequest
 import spotification2.common.BIO
 import spotification2.common.NonBlankString
 import spotification2.common.UriString
+import spotification2.common.api.ApiServerEndpoints
 import spotification2.common.api.GenericError
-import spotification2.common.api.ListServerEndpoints
-import spotification2.common.api.MkServerEndpoint
 import spotification2.config.AuthConfig
 
-private def baseEndpoint =
+private val baseEndpoint =
   endpoint
     .get
     .in("authorization" / "spotify")
     .errorOut(jsonBody[GenericError].and(statusCode(StatusCode.InternalServerError)))
 
-private def callbackEndpoint =
+private val callbackEndpoint =
   baseEndpoint.in("callback")
 
-private def callbackCodeParam: Query[NonBlankString] =
+private val callbackCodeParam: Query[NonBlankString] =
   query("code")
 
-private def callbackErrorParam: Query[NonBlankString] =
+private val callbackErrorParam: Query[NonBlankString] =
   query("error")
 
-private def callbackStateParam: Query[Option[NonBlankString]] =
+private val callbackStateParam: Query[Option[NonBlankString]] =
   query("state")
 
 ///
 
-trait GetSpotifyAuthorization extends MkServerEndpoint:
-  final def mkEndpoint =
-    baseEndpoint
-      .out(jsonBody[UriString].and(statusCode(StatusCode.Found)))
+trait GetSpotifyAuthorization:
+  val getSpotifyAuthorization =
+    baseEndpoint.out(jsonBody[UriString].and(statusCode(StatusCode.Found)))
 
-  override final def mkServerEndpoint: ServerEndpoint[Any, IO] =
-    mkEndpoint.serverLogicPure(_ => logic)
+  val getSpotifyAuthorizationServer: ServerEndpoint[Any, IO] =
+    getSpotifyAuthorization.serverLogicPure(_ => getSpotifyAuthorizationLogic)
 
-  def logic: Either[GenericError, UriString]
+  def getSpotifyAuthorizationLogic: Either[GenericError, UriString]
 
 ///
 
-trait GetCallback extends MkServerEndpoint:
-  final def mkEndpoint =
+trait GetCallback:
+  val getCallback =
     callbackEndpoint
       .in(callbackCodeParam)
       .in(callbackStateParam)
       .out(jsonBody[AccessTokenResponse])
 
-  override final def mkServerEndpoint: ServerEndpoint[Any, IO] =
-    mkEndpoint.serverLogic(logic)
+  val getCallbackServer: ServerEndpoint[Any, IO] =
+    getCallback.serverLogic(getCallbackLogic)
 
-  def logic(code: NonBlankString, state: Option[NonBlankString]): BIO[GenericError, AccessTokenResponse]
+  def getCallbackLogic(
+    code: NonBlankString,
+    state: Option[NonBlankString]
+  ): BIO[GenericError, AccessTokenResponse]
 
 ///
 
-trait GetErrorCallback extends MkServerEndpoint:
-  final def mkEndpoint =
+trait GetErrorCallback:
+  val getErrorCallback =
     callbackEndpoint
       .in(callbackErrorParam)
       .in(callbackStateParam)
       .out(jsonBody[AuthorizeErrorResponse])
 
-  override final def mkServerEndpoint: ServerEndpoint[Any, IO] =
-    mkEndpoint.serverLogic(logic)
+  val getErrorCallbackServer: ServerEndpoint[Any, IO] =
+    getErrorCallback.serverLogic(getErrorCallbackLogic)
 
-  def logic(error: NonBlankString, state: Option[NonBlankString]): BIO[GenericError, AuthorizeErrorResponse]
+  def getErrorCallbackLogic(
+    error: NonBlankString,
+    state: Option[NonBlankString]
+  ): BIO[GenericError, AuthorizeErrorResponse]
 
 ///
 
-trait AuthApi extends ListServerEndpoints:
-  def getSpotifyAuthorization: GetSpotifyAuthorization
-  def getCallback: GetCallback
-  def getErrorCallback: GetErrorCallback
-
-  override final def serverEndpoints: List[ServerEndpoint[Any, IO]] =
-    List(
-      getSpotifyAuthorization,
-      getCallback,
-      getErrorCallback
-    ).map(_.mkServerEndpoint)
+trait AuthApi extends ApiServerEndpoints, GetSpotifyAuthorization, GetCallback, GetErrorCallback:
+  override def apiServerEndpoints: List[ServerEndpoint[Any, IO]] = List(
+    getSpotifyAuthorizationServer,
+    getCallbackServer,
+    getErrorCallbackServer
+  )
 
 object AuthApi:
   def apply(authService: AuthService, authConfig: AuthConfig): AuthApi = new:
-    override def getSpotifyAuthorization: GetSpotifyAuthorization = new:
-      override def logic: Either[GenericError, UriString] =
-        AuthService
-          .makeAuthorizeUri(AuthorizeRequest.fromConfig(authConfig))
-          .leftMap(GenericError.make)
+    override def getSpotifyAuthorizationLogic: Either[GenericError, UriString] =
+      AuthService
+        .makeAuthorizeUri(AuthorizeRequest.fromConfig(authConfig))
+        .leftMap(GenericError.make)
 
-    override def getCallback: GetCallback = new:
-      override def logic(
-        code: NonBlankString,
-        state: Option[NonBlankString]
-      ): BIO[GenericError, AccessTokenResponse] =
-        authService
-          .requestAccessToken(AccessTokenRequest.fromConfig(authConfig, code))
-          .attempt
-          .leftMapIn(GenericError.fromThrowable)
+    override def getCallbackLogic(
+      code: NonBlankString,
+      state: Option[NonBlankString]
+    ): BIO[GenericError, AccessTokenResponse] =
+      authService
+        .requestAccessToken(AccessTokenRequest.fromConfig(authConfig, code))
+        .attempt
+        .leftMapIn(GenericError.fromThrowable)
 
-    override def getErrorCallback: GetErrorCallback = new:
-      override def logic(
-        error: NonBlankString,
-        state: Option[NonBlankString]
-      ): BIO[GenericError, AuthorizeErrorResponse] =
-        ???
+    override def getErrorCallbackLogic(
+      error: NonBlankString,
+      state: Option[NonBlankString]
+    ): BIO[GenericError, AuthorizeErrorResponse] =
+      ???

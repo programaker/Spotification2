@@ -13,9 +13,9 @@ import sttp.tapir.server.ServerEndpoint
 
 import spotification2.auth.AccessTokenRequest
 import spotification2.auth.AccessTokenResponse
-import spotification2.auth.AuthService
 import spotification2.auth.AuthorizeErrorResponse
 import spotification2.auth.AuthorizeRequest
+import spotification2.auth.service.AuthService
 import spotification2.common.BIO
 import spotification2.common.NonBlankString
 import spotification2.common.UriString

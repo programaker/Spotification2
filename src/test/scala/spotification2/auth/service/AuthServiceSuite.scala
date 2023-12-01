@@ -1,8 +1,9 @@
-package spotification2.auth
+package spotification2.auth.service
 
 import cats.syntax.all.*
 import munit.CatsEffectSuite
 
+import spotification2.auth.*
 import spotification2.common.HexString32P
 import spotification2.common.RefinementError
 import spotification2.common.UriString
@@ -37,6 +38,6 @@ final class AuthServiceSuite extends CatsEffectSuite:
         .refineU[UriStringP]
         .asRight[RefinementError]
 
-    val actual = AuthService.makeAuthorizeUri(req)
+    val actual = service.AuthService.makeAuthorizeUri(req)
     assertEquals(actual, expected)
   }

@@ -1,4 +1,4 @@
-package spotification2.auth
+package spotification2.auth.service
 
 import java.net.URI
 import java.net.URLEncoder
@@ -14,6 +14,7 @@ import cats.syntax.all.*
 import eu.timepit.refined.cats.*
 import io.circe.parser.*
 
+import spotification2.auth.*
 import spotification2.common.RefinementError
 import spotification2.common.UriString
 import spotification2.common.syntax.refined.*

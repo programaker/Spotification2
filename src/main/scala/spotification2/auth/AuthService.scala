@@ -114,5 +114,4 @@ object WorkaroundService:
     URLEncoder.encode(s, StandardCharsets.UTF_8)
 
   def base64Credentials(clientId: ClientId, clientSecret: ClientSecret): String =
-    val s = show"$clientId:$clientSecret"
-    Base64.getEncoder.encodeToString(s.getBytes(StandardCharsets.UTF_8))
+    Base64.getEncoder.encodeToString(show"$clientId:$clientSecret".getBytes(StandardCharsets.UTF_8))

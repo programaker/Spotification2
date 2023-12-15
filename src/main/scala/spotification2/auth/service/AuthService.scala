@@ -8,8 +8,8 @@ import io.circe.parser.*
 import spotification2.auth.*
 import spotification2.common.RefinementError
 import spotification2.common.UriString
-import spotification2.common.syntax.refined.*
 import spotification2.common.api.GenericError
+import spotification2.common.syntax.refined.*
 
 trait AuthService:
   def requestAccessToken(req: AccessTokenRequest): IO[AccessTokenResponse]

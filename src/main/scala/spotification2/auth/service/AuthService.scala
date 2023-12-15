@@ -9,9 +9,11 @@ import spotification2.auth.*
 import spotification2.common.RefinementError
 import spotification2.common.UriString
 import spotification2.common.syntax.refined.*
+import spotification2.common.api.GenericError
 
 trait AuthService:
   def requestAccessToken(req: AccessTokenRequest): IO[AccessTokenResponse]
+  def callbackError(req: CallbackErrorRequest): IO[GenericError]
 
 object AuthService:
   def apply(workaroundService: WorkaroundService): AuthService = new:
@@ -37,6 +39,9 @@ object AuthService:
       workaroundService
         .post(uri, formBody, headers)
         .flatMap(decode[AccessTokenResponse](_).pipe(IO.fromEither))
+
+    override def callbackError(req: CallbackErrorRequest): IO[GenericError] =
+      GenericError.make(req.query.error).pure
   end apply
 
   def makeAuthorizeUri(req: AuthorizeRequest): Either[RefinementError, UriString] =

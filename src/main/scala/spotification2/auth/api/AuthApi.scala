@@ -13,7 +13,6 @@ import sttp.tapir.server.ServerEndpoint
 
 import spotification2.auth.AccessTokenRequest
 import spotification2.auth.AccessTokenResponse
-import spotification2.auth.AuthorizeErrorResponse
 import spotification2.auth.AuthorizeRequest
 import spotification2.auth.service.AuthService
 import spotification2.common.BIO
@@ -22,6 +21,8 @@ import spotification2.common.UriString
 import spotification2.common.api.ApiServerEndpoints
 import spotification2.common.api.GenericError
 import spotification2.config.AuthConfig
+import eu.timepit.refined.cats.*
+import spotification2.auth.CallbackErrorRequest
 
 private val baseEndpoint =
   endpoint
@@ -76,15 +77,15 @@ trait GetErrorCallback:
     callbackEndpoint
       .in(callbackErrorParam)
       .in(callbackStateParam)
-      .out(jsonBody[AuthorizeErrorResponse])
+      .out(jsonBody[GenericError])
 
   val getErrorCallbackServer: ServerEndpoint[Any, IO] =
-    getErrorCallback.serverLogic(getErrorCallbackLogic)
+    getErrorCallback.serverLogicError(getErrorCallbackLogic)
 
   def getErrorCallbackLogic(
     error: NonBlankString,
     state: Option[NonBlankString]
-  ): BIO[GenericError, AuthorizeErrorResponse]
+  ): IO[GenericError]
 
 ///
 
@@ -114,5 +115,5 @@ object AuthApi:
     override def getErrorCallbackLogic(
       error: NonBlankString,
       state: Option[NonBlankString]
-    ): BIO[GenericError, AuthorizeErrorResponse] =
-      ???
+    ): IO[GenericError] =
+      authService.callbackError(CallbackErrorRequest.make(error, state))

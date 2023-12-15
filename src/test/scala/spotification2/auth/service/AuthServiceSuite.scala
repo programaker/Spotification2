@@ -35,8 +35,7 @@ final class AuthServiceSuite extends CatsEffectSuite:
         "response_type=code&" +
         "redirect_uri=http%3A%2F%2Ftest.com%2Fauthorization%2Fspotify%2Fcallback&" +
         "scope=playlist-read-collaborative+playlist-modify-public+playlist-read-private")
-        .refineU[UriStringP]
-        .asRight[RefinementError]
+        .refineE[UriStringP]
 
     val actual = service.AuthService.makeAuthorizeUri(req)
     assertEquals(actual, expected)

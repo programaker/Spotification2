@@ -13,7 +13,7 @@ extension [T](t: T)
   def refineV[P](using Validate[T, P]): Either[String, Refined[T, P]] =
     refineV_[P](t)
 
-  /** Refinement function that models Predicate errors as [[octogato.common.RefinementError]] */
+  /** Refinement function that models Predicate errors as [[spotification2.common.RefinementError]] */
   def refineE[P](using Validate[T, P]): Either[RefinementError, Refined[T, P]] =
     refineV_[P](t).leftMap(RefinementError.apply)
 

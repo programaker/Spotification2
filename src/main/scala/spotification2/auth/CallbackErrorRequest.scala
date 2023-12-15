@@ -1,6 +1,7 @@
 package spotification2.auth
 
 import spotification2.common.NonBlankString
+
 import CallbackErrorRequest.*
 
 final case class CallbackErrorRequest(query: Query)

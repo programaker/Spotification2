@@ -14,6 +14,7 @@ import sttp.tapir.server.ServerEndpoint
 import spotification2.auth.AccessTokenRequest
 import spotification2.auth.AccessTokenResponse
 import spotification2.auth.AuthorizeRequest
+import spotification2.auth.CallbackErrorRequest
 import spotification2.auth.service.AuthService
 import spotification2.common.BIO
 import spotification2.common.NonBlankString
@@ -21,7 +22,6 @@ import spotification2.common.UriString
 import spotification2.common.api.ApiServerEndpoints
 import spotification2.common.api.GenericError
 import spotification2.config.AuthConfig
-import spotification2.auth.CallbackErrorRequest
 
 private val baseEndpoint =
   endpoint

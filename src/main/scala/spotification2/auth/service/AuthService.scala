@@ -47,9 +47,9 @@ object AuthService:
   def makeAuthorizeUri(req: AuthorizeRequest): Either[RefinementError, UriString] =
     val query = req.query
     Iterator(
-      query.clientId.show.some.map("client_id" -> _),
-      query.responseType.show.some.map("response_type" -> _),
-      query.redirectUri.show.some.map("redirect_uri" -> _),
+      query.clientId.show.pipe("client_id" -> _).some,
+      query.responseType.show.pipe("response_type" -> _).some,
+      query.redirectUri.show.pipe("redirect_uri" -> _).some,
       query.showDialog.map(_.show.pipe("show_dialog" -> _)),
       query.state.map(_.show.pipe("state" -> _)),
       query.scope.map(_.mkString_(" ").pipe("scope" -> _))

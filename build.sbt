@@ -5,9 +5,10 @@
 val Spotification2 = "0.0.1"
 
 val Scala = "3.3.1"
+val Java = "21"
 
-// Try Alpaquita: https://bell-sw.com/blog/bellsoft-introduces-alpaquita-linux/
-val DockerImage = "eclipse-temurin:19.0.1_10-jre-focal"
+// Try Alpaquita, maybe: https://bell-sw.com/blog/bellsoft-introduces-alpaquita-linux/
+val DockerImage = "eclipse-temurin:21.0.1_12-jre-alpine"
 
 lazy val root = project
   .in(file("."))
@@ -37,6 +38,7 @@ lazy val root = project
     semanticdbVersion := scalafixSemanticdb.revision,
 
     scalacOptions ++= Seq(
+      "-release", Java,
       "-encoding", "utf8",
       "-deprecation",
       "-language:strictEquality",
@@ -44,9 +46,15 @@ lazy val root = project
       "-Wvalue-discard",
       "-Ykind-projector:underscores",
       "-Yimports:java.lang,scala,scala.Predef,scala.util.chaining"
-    )
+    ),
+
+    javacOptions ++= Seq(
+      "-source", Java, 
+      "-target", Java
+    ),
   )
   .enablePlugins(
     JavaServerAppPackaging,
-    DockerPlugin
+    DockerPlugin,
+    AshScriptPlugin // required to build an Alpine image
   )

@@ -21,7 +21,6 @@ import spotification2.common.UriString
 import spotification2.common.api.ApiServerEndpoints
 import spotification2.common.api.GenericError
 import spotification2.config.AuthConfig
-import eu.timepit.refined.cats.*
 import spotification2.auth.CallbackErrorRequest
 
 private val baseEndpoint =

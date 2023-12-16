@@ -17,6 +17,14 @@ import sttp.tapir.server.stub4.TapirStubInterpreter
 import spotification2.common.GenericResponse
 
 final class HealthCheckApiSuite extends CatsEffectSuite:
+  val apiFix = ResourceSuiteLocalFixture("api", apiResource)
+  val expectedResponseFix = ResourceSuiteLocalFixture("response", jsonResponseResource)
+
+  override def munitFixtures = List(
+    apiFix,
+    expectedResponseFix
+  )
+
   test("should always return a simple success message") {
     val response = basicRequest
       .get(uri"http://test.com/health")
@@ -28,11 +36,6 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
 
     assertIO(status, StatusCode.Ok) *> assertIO(body, expectedResponseFix())
   }
-
-  val apiFix = ResourceSuiteLocalFixture("api", apiResource)
-  val expectedResponseFix = ResourceSuiteLocalFixture("response", jsonResponseResource)
-
-  override def munitFixtures = List(apiFix, expectedResponseFix)
 
   def apiResource: Resource[IO, HealthCheckApi] =
     Resource.pure(HealthCheckApi())

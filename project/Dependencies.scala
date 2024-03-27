@@ -37,19 +37,19 @@ object Dependencies {
   )
 
   private object Versions {
-    val Refined = "0.11.0"
+    val Refined = "0.11.1"
     val CatsCore = "2.10.0"
     val CatsEffect = "3.5.2"
     val CatsCollectionsCore = "0.9.8"
-    val Fs2Core = "3.9.3"
+    val Fs2Core = "3.10.1"
     val CirceCore = "0.14.6"
-    val PureConfigCore = "0.17.4"
+    val PureConfigCore = "0.17.6"
     val Log4Cats = "2.6.0"
-    val Logback = "1.4.14"
-    val Mouse = "1.2.2"
-    val TapirCore = "1.9.5"
+    val Logback = "1.5.3"
+    val Mouse = "1.2.3"
+    val TapirCore = "1.10.0"
     val MUnit = "0.7.29"
     val MUnitCatsEffect = "1.0.7"
-    val SttpCirce = "3.9.1"
+    val SttpCirce = "3.9.5"
   }
 }

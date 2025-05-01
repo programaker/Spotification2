@@ -22,7 +22,7 @@ object Dependencies {
     "io.circe" %% "circe-core" % Versions.CirceCore,
     "io.circe" %% "circe-generic" % Versions.CirceCore,
     "io.circe" %% "circe-parser" % Versions.CirceCore,
-    "io.circe" %% "circe-refined" % Versions.CirceCore,
+    "io.circe" %% "circe-refined" % Versions.CirceRefined,
 
     "org.scalameta" %% "munit" % Versions.MUnit % Test,
     "org.scalameta" %% "munit-scalacheck" % Versions.MUnitScalacheck % Test,
@@ -42,7 +42,8 @@ object Dependencies {
     val CatsEffect = "3.6.1"
     val CatsCollectionsCore = "0.9.9"
     val Fs2Core = "3.12.0"
-    val CirceCore = "0.14.8"
+    val CirceCore = "0.14.13"
+    val CirceRefined = "0.14.8"
     val PureConfigCore = "0.17.9"
     val Log4Cats = "2.7.0"
     val Logback = "1.5.18"

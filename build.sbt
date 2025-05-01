@@ -4,7 +4,7 @@
 // | ____ api changes
 val Spotification2 = "0.0.1"
 
-val Scala = "3.4.0"
+val Scala = "3.6.4" 
 val Java = "21"
 
 // Try Alpaquita, maybe: https://bell-sw.com/blog/bellsoft-introduces-alpaquita-linux/

@@ -17,7 +17,7 @@ object Dependencies {
     "com.softwaremill.sttp.tapir" %% "tapir-netty-server-cats" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-sttp-client" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-sttp-stub-server" % Versions.TapirCore % Test,
-    "com.softwaremill.sttp.client3" %% "circe" % Versions.SttpCirce % Test,
+    "com.softwaremill.sttp.client4" %% "circe" % Versions.SttpCirce % Test,
 
     "io.circe" %% "circe-core" % Versions.CirceCore,
     "io.circe" %% "circe-generic" % Versions.CirceCore,
@@ -25,8 +25,8 @@ object Dependencies {
     "io.circe" %% "circe-refined" % Versions.CirceCore,
 
     "org.scalameta" %% "munit" % Versions.MUnit % Test,
-    "org.scalameta" %% "munit-scalacheck" % Versions.MUnit % Test,
-    "org.typelevel" %% "munit-cats-effect-3" % Versions.MUnitCatsEffect % Test,
+    "org.scalameta" %% "munit-scalacheck" % Versions.MUnitScalacheck % Test,
+    "org.typelevel" %% "munit-cats-effect" % Versions.MUnitCatsEffect % Test,
 
     "com.github.pureconfig" %% "pureconfig-core" % Versions.PureConfigCore,
 
@@ -37,19 +37,20 @@ object Dependencies {
   )
 
   private object Versions {
-    val Refined = "0.11.1"
-    val CatsCore = "2.10.0"
-    val CatsEffect = "3.5.2"
-    val CatsCollectionsCore = "0.9.8"
-    val Fs2Core = "3.10.1"
-    val CirceCore = "0.14.6"
-    val PureConfigCore = "0.17.6"
-    val Log4Cats = "2.6.0"
-    val Logback = "1.5.3"
-    val Mouse = "1.2.3"
-    val TapirCore = "1.10.0"
-    val MUnit = "0.7.29"
-    val MUnitCatsEffect = "1.0.7"
-    val SttpCirce = "3.9.5"
+    val Refined = "0.11.3"
+    val CatsCore = "2.13.0"
+    val CatsEffect = "3.6.1"
+    val CatsCollectionsCore = "0.9.9"
+    val Fs2Core = "3.12.0"
+    val CirceCore = "0.14.8"
+    val PureConfigCore = "0.17.9"
+    val Log4Cats = "2.7.0"
+    val Logback = "1.5.18"
+    val Mouse = "1.3.2"
+    val TapirCore = "1.11.25"
+    val MUnit = "1.1.1"
+    val MUnitCatsEffect = "2.1.0"
+    val MUnitScalacheck = "1.1.0"
+    val SttpCirce = "4.0.3"
   }
 }

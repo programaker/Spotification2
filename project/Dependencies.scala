@@ -44,6 +44,7 @@ object Dependencies {
     val CatsCore = "2.13.0"
     val CatsEffect = "3.6.1"
     val CatsCollectionsCore = "0.9.9"
+    val CatsScalacheck = "0.3.2"
     val Fs2Core = "3.12.0"
     val CirceCore = "0.14.13"
     val CirceRefined = "0.14.8"

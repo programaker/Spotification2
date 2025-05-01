@@ -14,7 +14,7 @@ import sttp.model.StatusCode
 import sttp.tapir.integ.cats.effect.CatsMonadError
 import sttp.tapir.server.stub4.TapirStubInterpreter
 
-import spotification2.common.GenericResponse
+import spotification2.common.api.GenericSuccess
 
 final class HealthCheckApiSuite extends CatsEffectSuite:
   val apiFix = ResourceSuiteLocalFixture("api", apiResource)
@@ -50,5 +50,5 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
 
   def getHealthBackendStub(api: HealthCheckApi): Backend[IO] =
     TapirStubInterpreter(BackendStub(new CatsMonadError[IO]()))
-      .whenServerEndpointRunLogic(api.getHealth.mkServerEndpoint)
+      .whenServerEndpointRunLogic(api.getHealthServer)
       .backend()

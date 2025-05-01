@@ -44,7 +44,7 @@ lazy val root = project
       "-language:strictEquality",
       "-Wunused:all",
       "-Wvalue-discard",
-      "-Ykind-projector:underscores",
+      "-Xkind-projector:underscores",
       "-Yimports:java.lang,scala,scala.Predef,scala.util.chaining"
     ),
 

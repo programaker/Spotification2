@@ -4,7 +4,6 @@ import scala.concurrent.duration.FiniteDuration
 
 import eu.timepit.refined.pureconfig.*
 import pureconfig.ConfigReader
-import pureconfig.generic.derivation.default.*
 
 import spotification2.album.AlbumApiUri
 import spotification2.artist.ArtistApiUri

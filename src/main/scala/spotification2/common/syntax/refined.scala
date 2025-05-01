@@ -2,9 +2,9 @@ package spotification2.common.syntax.refined
 
 import cats.data.ValidatedNec
 import cats.syntax.either.*
-import eu.timepit.refined.refineV as refineV_
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.api.Validate
+import eu.timepit.refined.refineV as refineV_
 
 import spotification2.common.RefinementError
 

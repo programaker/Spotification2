@@ -1,19 +1,20 @@
 package spotification2.monitoring.api
 
-import munit.CatsEffectSuite
-import sttp.tapir.server.stub.TapirStubInterpreter
-import sttp.client3.testing.SttpBackendStub
 import cats.effect.IO
-import sttp.tapir.integ.cats.effect.CatsMonadError
-import sttp.client3.*
-import sttp.client3.circe.*
-import spotification2.common.GenericResponse
 import cats.effect.kernel.Resource
-import fs2.io.file.Path
-import fs2.io.file.Files
-import sttp.model.StatusCode
-import io.circe.parser.*
 import cats.syntax.all.*
+import fs2.io.file.Files
+import fs2.io.file.Path
+import io.circe.parser.*
+import munit.CatsEffectSuite
+import sttp.client4.*
+import sttp.client4.circe.*
+import sttp.client4.testing.BackendStub
+import sttp.model.StatusCode
+import sttp.tapir.integ.cats.effect.CatsMonadError
+import sttp.tapir.server.stub4.TapirStubInterpreter
+
+import spotification2.common.GenericResponse
 
 final class HealthCheckApiSuite extends CatsEffectSuite:
   test("should always return a simple success message") {
@@ -44,7 +45,7 @@ final class HealthCheckApiSuite extends CatsEffectSuite:
       .map(decode[GenericResponse](_).leftMap(_.toString()))
       .toResource
 
-  def getHealthBackendStub(api: HealthCheckApi): SttpBackend[IO, Nothing] =
-    TapirStubInterpreter(SttpBackendStub(new CatsMonadError[IO]()))
+  def getHealthBackendStub(api: HealthCheckApi): Backend[IO] =
+    TapirStubInterpreter(BackendStub(new CatsMonadError[IO]()))
       .whenServerEndpointRunLogic(api.getHealth.mkServerEndpoint)
       .backend()

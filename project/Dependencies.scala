@@ -15,8 +15,8 @@ object Dependencies {
     "com.softwaremill.sttp.tapir" %% "tapir-core" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-json-circe" % Versions.TapirCore,
     "com.softwaremill.sttp.tapir" %% "tapir-netty-server-cats" % Versions.TapirCore,
-    "com.softwaremill.sttp.tapir" %% "tapir-sttp-client" % Versions.TapirCore,
-    "com.softwaremill.sttp.tapir" %% "tapir-sttp-stub-server" % Versions.TapirCore % Test,
+    "com.softwaremill.sttp.tapir" %% "tapir-sttp-client4" % Versions.TapirCore,
+    "com.softwaremill.sttp.tapir" %% "tapir-sttp-stub4-server" % Versions.TapirCore % Test,
     "com.softwaremill.sttp.client4" %% "circe" % Versions.SttpCirce % Test,
 
     "io.circe" %% "circe-core" % Versions.CirceCore,
